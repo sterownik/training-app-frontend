@@ -1,0 +1,29 @@
+@import '../constans/colors.scss';
+
+.strava-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: $strava-color;
+  /* oficjalny Strava Orange */
+  color: $white-color;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.strava-btn:hover {
+  background-color: $strava-color-hover;
+}
+
+.strava-btn:active {
+  transform: scale(0.98);
+}
+
+.strava-icon {
+  width: 18px;
+  height: 18px;
+  filter: brightness(0) invert(1);
+}

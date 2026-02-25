@@ -1,0 +1,38 @@
+@import '../constans/colors.scss';
+
+.tra-navigation__container {
+  background-color: $white-color;
+  display: flex;
+  justify-content: space-around;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 5px 0;
+  border-radius: 8px 8px 0 0;
+}
+
+.tra-navigation__item {
+  display: flex;
+  align-items: center;
+  opacity: .7;
+  color: $black-color;
+}
+
+.tra-navigation__item:visited {
+  color: $black-color;
+}
+
+.tra-navigation__item.active-link {
+  animation: bigger .5s forwards;
+  color: $material-primary-color;
+}
+
+@keyframes bigger {
+  from {
+    opacity: .7;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

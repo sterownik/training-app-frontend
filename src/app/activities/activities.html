@@ -1,0 +1,163 @@
+<!-- @if(activities) { -->
+
+@if(activitiesResource.isLoading() || isRealodingActivities()) {
+<div class="tra-activities__spinner">
+  <mat-spinner></mat-spinner>
+
+  <div class="tra-activities__spinner-text">
+    @if(isRealodingActivities()) {
+    <span>Synchronizacja aktywności</span>
+    }
+    @if(activitiesResource.isLoading()) {
+    <span>Pobieranie aktywności</span>
+    }
+  </div>
+
+</div>
+}
+@if(activitiesResource.value()) {
+
+@for (item of activitiesResource.value()?.content; track $index) {
+<div class="tra-activities__list">
+  @switch (item.type) {
+  @case ("Run") {
+  <div class="tra-activities__list-item">
+    <span class="tra-activities__date">{{item.startDateLocal}}</span>
+    <div class="tra-activities__list-item-row">
+      <img src="assets/shoes.png"
+           class="tra-activities__list-icon"
+           alt="">
+      <span class="tra-activities__description-text">{{item.description}}</span>
+    </div>
+    <div class="tra-activities__list-item-row">
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Czas:</span>
+        <span>{{item.moving_time}}</span>
+      </div>
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Dystans:</span>
+        <span>{{item.distance}}</span>
+      </div>
+
+    </div>
+    <div class="tra-activities__list-item-row">
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Tempo:</span>
+        <span>{{item.pace}}</span>
+      </div>
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Tętno:</span>
+        <span>{{item.averageHeartRate}} bpm</span>
+
+      </div>
+
+    </div>
+    <tra-activity-item-bottom-part [laps]="item.laps"
+                                   [activityExtendedData]="{
+      isBike: false,
+      id: item.id,
+      descriptionTyped: item.descriptionTyped,
+      npPower: ''
+    }"></tra-activity-item-bottom-part>
+  </div>
+  }
+  @case ("Ride") {
+  <div class="tra-activities__list-item">
+    <span class="tra-activities__date">{{item.startDateLocal}}</span>
+    <div class="tra-activities__list-item-row">
+      <img src="assets/road.png"
+           class="tra-activities__list-icon"
+           alt="">
+      <span class="tra-activities__description-text">{{item.description}}</span>
+    </div>
+    <div class="tra-activities__list-item-row">
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Czas:</span>
+        <span>{{item.moving_time}}</span>
+      </div>
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Dystans:</span>
+        <span>{{item.distance}}</span>
+      </div>
+    </div>
+    <div class="tra-activities__list-item-row">
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Tempo:</span>
+        <span>{{item.pace}}</span>
+      </div>
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Tętno:</span>
+        <span>{{item.averageHeartRate}} bpm</span>
+      </div>
+    </div>
+    <div class="tra-activities__list-item-row">
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Moc:</span>
+        <span>{{item.averageWatts}} watt</span>
+
+      </div>
+    </div>
+    <tra-activity-item-bottom-part [laps]="item.laps"
+                                   [activityExtendedData]="{
+      isBike: true,
+      id: item.id,
+      descriptionTyped: item.descriptionTyped,
+      npPower: item.normalizedPower,
+
+    }"></tra-activity-item-bottom-part>
+  </div>
+  }
+  @default {
+  <div class="tra-activities__list-item">
+    <span class="tra-activities__date">{{item.startDateLocal}}</span>
+    <div class="tra-activities__list-item-row">
+      <img src="assets/exercises.png"
+           class="tra-activities__list-icon"
+           alt="">
+      <div>
+        <span class="tra-activities__description-text">{{item.description}}</span>
+      </div>
+    </div>
+    <div class="tra-activities__list-item-row">
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Czas:</span>
+        <span>{{item.moving_time}}</span>
+      </div>
+      <div class="tra-activities__field-desc-row">
+        <span class="tra-activities__field-description">Tętno:</span>
+        <span>{{item.averageHeartRate}} bpm</span>
+
+      </div>
+
+    </div>
+    <tra-activity-item-bottom-part [activityExtendedData]="{
+      isBike: false,
+      id: item.id,
+      descriptionTyped: item.descriptionTyped,
+      npPower: ''
+
+    }"></tra-activity-item-bottom-part>
+  </div>
+  }
+
+  }
+
+</div>
+}
+
+
+<mat-paginator [length]="activitiesResource.value()?.totalElements"
+               [pageSize]="20"
+               [showFirstLastButtons]="false"
+               [hidePageSize]="true"
+               (page)="changePage($event)"
+               [pageSizeOptions]="[5, 10, 25, 100]"
+               aria-label="Select page">
+</mat-paginator>
+}
+
+
+
+
+
+<!-- } -->

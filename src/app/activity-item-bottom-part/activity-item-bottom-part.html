@@ -1,0 +1,79 @@
+@switch (isEditMode()) {
+@case (true) {
+<form class="tra-activity-item-bottom-part__form">
+  @if (isSaving()) {
+  <div class="tra-activity-item-bottom-part__saving-spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+  }
+  <div class="tra-activity-item-bottom-part__form-container"
+       [class]="{'tra-activity-item-bottom-part__spinner-mode': isSaving(),}">
+    @if(!!activityExtendedData.isBike) {
+    <mat-form-field class="tra-activity-item-bottom-part__power-input">
+      <mat-label>Npower:</mat-label>
+      <input matInput
+             type="number"
+             [formField]="activityExtendedDataForm.npPower">
+    </mat-form-field>
+    }
+
+
+    <mat-form-field class="tra-activity-item-bottom-part__desc-input">
+      <mat-label>Opis treningu:</mat-label>
+      <textarea matInput
+                type="text"
+                [formField]="activityExtendedDataForm.descriptionTyped"></textarea>
+    </mat-form-field>
+  </div>
+
+  <button (click)="isEditMode.set(true)"
+          class="tra-activity-item-bottom-part__icon--save tra-activity-item-bottom-part__icon"
+          matMiniFab
+          (click)="saveActivity()"
+          [class]="{'tra-activity-item-bottom-part__spinner-mode': isSaving(),}"
+          aria-label="Example icon button with a home icon">
+    <mat-icon>save</mat-icon>
+  </button>
+
+</form>
+}
+@case (false) {
+<div class="tra-activity-item-bottom-part__unedided-form">
+  <div class="tra-activity-item-bottom-part__unedided-form-values">
+    @if (activityExtendedData.isBike) {
+    <div class="tra-activity-item-bottom-part__field-desc-row">
+      <span class="tra-activity-item-bottom-part__field-description">Moc np:</span>
+      <span>{{activityExtendedDataForm.npPower().value() ? activityExtendedDataForm.npPower().value() + ' watt' : '-'}}</span>
+    </div>
+    }
+    <div class="tra-activity-item-bottom-part__field-desc-row">
+      <span class="tra-activity-item-bottom-part__field-description">Opis treningu:</span>
+      <div class="tra-activity-item-bottom-part__description-container">
+        <span
+              class="tra-activity-item-bottom-part__description-content">{{activityExtendedDataForm.descriptionTyped().value() || '-' |textCutter:70}}</span>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="tra-activity-item-bottom-part__buttons">
+    @if (!!laps) {
+    <button (click)="openDialog()"
+            class="tra-activity-item-bottom-part__icon--edit tra-activity-item-bottom-part__icon"
+            matMiniFab
+            aria-label="Example icon button with a home icon">
+      <mat-icon>info</mat-icon>
+    </button>
+    }
+    <button (click)="isEditMode.set(true)"
+            class="tra-activity-item-bottom-part__icon--edit tra-activity-item-bottom-part__icon"
+            matMiniFab
+            aria-label="Example icon button with a home icon">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+</div>
+
+
+}
+}

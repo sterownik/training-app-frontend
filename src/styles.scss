@@ -1,0 +1,98 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material'as mat;
+@import './app/constans/colors.scss';
+@import './app/constans/fonts.scss';
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.paginator-overrides((container-size: 500, container-text-weight: 700));
+
+  @include mat.progress-spinner-overrides((active-indicator-color: $strava-color,
+    ));
+
+  // mat-form-field {
+  //   @include mat.form-field-overrides((filled-container-color: $white-color,
+  //       filled-label-text-color: $black-color,
+  //       filled-focus-active-indicator-color: $material-primary-color,
+  //       filled-focus-label-text-color: $material-primary-color,
+  //       filled-hover-active-indicator-color: $material-primary-color,
+  //       filled-input-text-color: $black-color));
+  // }
+
+  .mat-mdc-paginator-range-actions {
+    display: grid;
+    width: 100%;
+    grid-column: 2;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+  }
+
+  .mat-mdc-paginator-range-label {
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    grid-column: 1 / 3;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .mat-mdc-paginator-navigation-previous {
+    grid-column: 1 /1;
+  }
+
+  .mat-mdc-paginator-navigation-next {
+    grid-column: 2 /2;
+  }
+
+  .tra-activity-item-bottom-part__power-input,
+  .tra-activity-item-bottom-part__desc-input {
+    .mat-mdc-form-field-bottom-align {
+      display: none;
+    }
+
+    .mat-mdc-form-field-infix {}
+  }
+}
+
+body {
+  background-color: $main-color;
+  font-family: 'Boathouse';
+  margin: 0;
+}
+
+app-root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+*:has(+ .tra-navigation) {
+  margin-bottom: 60px;
+}
+
+.tra-navigation {
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+html {
+  color-scheme: light dark;
+  @include mat.theme((color: mat.$blue-palette,
+      typography: Roboto,
+      density: 0));
+  color: #000000;
+}
+
+
+
+/* You can add global styles to this file, and also import other style files */

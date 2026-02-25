@@ -1,0 +1,34 @@
+.tra-ai-question__form,
+.tra-ai-question__response {
+  width: 94%;
+  margin: 16px auto;
+}
+
+
+.tra-ai-question__form-select,
+.tra-ai-question__prompt-input,
+.tra-ai-question__control-date {
+  width: 100%;
+}
+
+
+.tra-ai-question__button {
+  width: 100%;
+}
+
+.tra-ai-question__spinner {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  z-index: 1;
+}
+
+
+.tra-ai-question__spinner-mode {
+  opacity: .5;
+}

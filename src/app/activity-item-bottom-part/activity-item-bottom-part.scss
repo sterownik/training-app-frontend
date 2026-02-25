@@ -1,0 +1,83 @@
+@use '@angular/material'as mat;
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+
+
+.tra-activity-item-bottom-part__icon {
+  margin-left: auto;
+}
+
+.tra-activity-item-bottom-part__icon--save {
+  width: 120px;
+}
+
+.tra-activity-item-bottom-part__field-desc-row {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.tra-activity-item-bottom-part__field-description {
+  font-size: .5rem;
+}
+
+.tra-activity-item-bottom-part__description-container {
+  display: flex;
+}
+
+.tra-activity-item-bottom-part__description-content {
+  flex: 1;
+}
+
+.tra-activity-item-bottom-part__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tra-activity-item-bottom-part__form-container {
+  width: 100%;
+}
+
+.tra-activity-item-bottom-part__unedided-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.tra-activity-item-bottom-part__icon {}
+
+.tra-activity-item-bottom-part__unedided-form-values {
+  width: 70%;
+}
+
+.tra-activity-item-bottom-part__saving-spinner-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.tra-activity-item-bottom-part__spinner-mode {
+  opacity: .7;
+}
+
+.tra-activity-item-bottom-part__power-input,
+.tra-activity-item-bottom-part__desc-input {
+  width: 100%;
+}
+
+
+.tra-activity-item-bottom-part__buttons {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+  justify-content: center;
+  align-items: center;
+}

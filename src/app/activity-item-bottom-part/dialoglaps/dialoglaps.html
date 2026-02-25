@@ -1,0 +1,37 @@
+<table mat-table
+       [dataSource]="parsedText()"
+       class="mat-elevation-z8">
+
+  <ng-container matColumnDef="pace">
+    <th mat-header-cell
+        *matHeaderCellDef> Tempo </th>
+    <td mat-cell
+        *matCellDef="let lap"> {{lap.pace}}{{this.isBike() ? ' km/h' : ' min/km'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="distance">
+    <th mat-header-cell
+        *matHeaderCellDef> Dystans </th>
+    <td mat-cell
+        *matCellDef="let lap"> {{lap.distance}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="watts">
+    <th mat-header-cell
+        *matHeaderCellDef> Waty </th>
+    <td mat-cell
+        *matCellDef="let lap"> {{lap.avgWatts || '---'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="avgHeartRate">
+    <th mat-header-cell
+        *matHeaderCellDef> Tętno </th>
+    <td mat-cell
+        *matCellDef="let lap"> {{lap.avgHeartRate}} </td>
+  </ng-container>
+
+  <tr mat-header-row
+      *matHeaderRowDef="['pace', 'distance', 'watts', 'avgHeartRate']"></tr>
+  <tr mat-row
+      *matRowDef="let row; columns: ['pace', 'distance', 'watts', 'avgHeartRate'];"></tr>
+</table>

@@ -1,0 +1,63 @@
+@if (isSaving()) {
+<div class="tra-ai-question__spinner">
+  <mat-spinner></mat-spinner>
+
+  <div class="tra-ai-question__spinner-text">
+    <span>Pobieranie odpowiedzi, może potrwać chwile...</span>
+  </div>
+
+</div>
+}
+
+<div [class]="{'tra-ai-question__spinner-mode': isSaving(),}">
+  <form class="tra-ai-question__form">
+    <mat-form-field class="tra-ai-question__form-select">
+      <mat-label>Wybierz jak filtrować aktywności</mat-label>
+      <mat-select [formField]="aiRequestFormModelForm.filterType">
+        <mat-option value="last3months">Ostatnie trzy miesiące</mat-option>
+        <mat-option value="last6months">Ostatnie pół roku</mat-option>
+        <mat-option value="lastYear">Ostatni rok</mat-option>
+        <mat-option value="last18months">Ostatni 1 rok i 6 miesięcy</mat-option>
+        <mat-option value="customDate">Własna data</mat-option>
+        <mat-option value="selected"
+                    disabled>Wybrane aktywności</mat-option>
+
+        <!-- 'last3months' | 'last6months' | 'lastYear' | 'customDate' | 'selected' | 'last18months' -->
+      </mat-select>
+    </mat-form-field>
+
+    @if (aiRequestFormModelForm.filterType().value() === 'customDate') {
+    <mat-form-field class="tra-ai-question__control-date">
+      <mat-label>Wybierz daty</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate
+               [formField]="aiRequestFormModelForm.startDateLocalStart"
+               placeholder="Data początkowa">
+        <input matEndDate
+               [formField]="aiRequestFormModelForm.startDateLocalEnd"
+               placeholder="Data końcowa">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matIconSuffix
+                             [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+
+    </mat-form-field>
+    }
+
+    <mat-form-field class="tra-ai-question__prompt-input">
+      <mat-label>Prompt do AI:</mat-label>
+      <textarea matInput
+                rows="10"
+                type="text"
+                [formField]="aiRequestFormModelForm.prompt"></textarea>
+    </mat-form-field>
+    <button (click)="sendToModel()"
+            class="tra-ai-question__button"
+            matButton="filled">Zadaj pytanie</button>
+  </form>
+  <br>
+  @if (htmlContent()) {
+  <div class="tra-ai-question__response"
+       [innerHTML]="htmlContent()"></div>
+  }
+</div>

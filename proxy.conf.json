@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://training-app-backend-production-4d0d.up.railway.app",
+    "secure": true,
+    "changeOrigin": true
+  }
+}
