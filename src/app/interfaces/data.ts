@@ -56,8 +56,9 @@ export interface PageActivityDto {
 
 export interface FilterActivityType {
   filterType: string; // np. "date"
-  startDateLocalStart: string; // data w formacie ISO
-  startDateLocalEnd: string; // data w formacie ISO
+  startDateLocalStart?: string | undefined; // data w formacie ISO
+  startDateLocalEnd?: string; // data w formacie ISO
+  activityIds?: number[]
 }
 
 export interface StravaAnalysisRequest {
@@ -110,4 +111,11 @@ export interface ActivityExtendedFromInterface {
   descriptionTyped: string | null;
   npPower: number | string;
   isBike: boolean | null;
+}
+
+export interface ActivityMin {
+  id: number,
+  type: string,
+  startDateLocal: string,
+  description: string
 }

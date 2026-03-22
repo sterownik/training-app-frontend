@@ -32,3 +32,14 @@
 .tra-ai-question__spinner-mode {
   opacity: .5;
 }
+
+.tra-ai-question__spinner-activities {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.tra-ai-question__activities-min {
+  max-height: 400px;
+  overflow-y: scroll;
+}

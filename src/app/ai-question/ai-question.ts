@@ -11,6 +11,11 @@ import moment from 'moment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { ActivityMin } from '../interfaces/data';
+import { httpResource, HttpResourceRef } from '@angular/common/http';
+import {MatListModule, MatListOption} from '@angular/material/list';
+import { MIN_ACTIVITIES_ENDPOINT } from '../services/data/enpoints';
+import { JsonPipe } from '@angular/common';
 
 interface AiRequestFormModelSignal {
   filterType:
@@ -40,6 +45,8 @@ interface AiRequestFormModelSignal {
     MatButton,
     MatProgressSpinnerModule,
     MatDatepickerModule,
+    MatListModule,
+    JsonPipe
   ],
   templateUrl: './ai-question.html',
   styleUrl: './ai-question.scss',
@@ -47,6 +54,7 @@ interface AiRequestFormModelSignal {
 export class AiQuestion {
   dataService = inject(DataService);
   isSaving = signal(false);
+  selectedActivities!: number[];
 
   aiRequestFormModel = signal<AiRequestFormModelSignal>({
     filterType: 'lastYear',
@@ -59,6 +67,15 @@ export class AiQuestion {
 
   response = signal<string>('');
   htmlContent = signal<string>('');
+
+  activitiesResource: HttpResourceRef<ActivityMin[] | any> = httpResource(
+    () => {
+      return this.aiRequestFormModelForm.filterType().value() === 'selected'
+        ? `${MIN_ACTIVITIES_ENDPOINT}`
+        : undefined;
+    }
+  );
+
   sendToModel() {
     let startDateLocalStart = '';
     let startDateLocalEnd = moment().format('YYYY-MM-DD');
@@ -86,14 +103,24 @@ export class AiQuestion {
         startDateLocalEnd = moment(this.aiRequestFormModelForm.startDateLocalEnd().value()).format(
           'YYYY-MM-DD'
         );
+        break
+
+
     }
-    const prepareData = {
-      prompt: this.aiRequestFormModelForm.prompt().value(),
-      filterActivityType: {
+    const filterActivityType = this.aiRequestFormModelForm.filterType().value() !== 'selected' ?
+  {
         filterType: 'date',
         startDateLocalStart: startDateLocalStart,
         startDateLocalEnd: startDateLocalEnd,
-      },
+      } :
+      {
+        filterType: 'selected',
+        activityIds: this.selectedActivities
+      }
+
+    const prepareData = {
+      prompt: this.aiRequestFormModelForm.prompt().value(),
+      filterActivityType
     };
     this.isSaving.set(true);
 
@@ -103,5 +130,12 @@ export class AiQuestion {
       this.htmlContent.set(marked(markdown) as any);
       this.isSaving.set(false);
     });
+  }
+
+  selectionChange(selected: MatListOption[]) {
+    const selectedIds = selected.map(s => s.value);
+
+  this.selectedActivities = this.activitiesResource.value()
+    .filter((a: ActivityMin) => selectedIds.includes(a.id)).map((value: ActivityMin) => value.id);
   }
 }
