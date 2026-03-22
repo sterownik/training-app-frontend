@@ -133,9 +133,6 @@ export class AiQuestion {
   }
 
   selectionChange(selected: MatListOption[]) {
-    const selectedIds = selected.map(s => s.value);
-
-  this.selectedActivities = this.activitiesResource.value()
-    .filter((a: ActivityMin) => selectedIds.includes(a.id)).map((value: ActivityMin) => value.id);
+    this.selectedActivities = selected.map(s => s.value);
   }
 }
