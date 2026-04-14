@@ -9,6 +9,7 @@ import { HttpResourceRef, httpResource } from '@angular/common/http';
 import moment from 'moment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivityItemBottomPart } from '../activity-item-bottom-part/activity-item-bottom-part';
+import { UserData } from '../services/user-data';
 
 @Component({
   selector: 'tra-activities',
@@ -18,6 +19,7 @@ import { ActivityItemBottomPart } from '../activity-item-bottom-part/activity-it
 })
 export class Activities {
   dataService = inject(DataService);
+  userData = inject(UserData);
   activities!: PageActivityDto;
   isRealodingActivities = signal(false);
 
@@ -44,12 +46,19 @@ export class Activities {
           content: parsed,
         };
       },
-    }
+    },
   );
 
   ngOnInit(): void {
     this.isRealodingActivities.set(true);
-    this.dataService.getMe().subscribe();
+    this.dataService
+      .getMe()
+      .pipe(
+        tap((data) => {
+          this.userData.userInfo.set(data);
+        }),
+      )
+      .subscribe();
     this.dataService
       .reloadActivities()
       .pipe(
@@ -61,7 +70,7 @@ export class Activities {
             pageSize: 20,
             length: 249,
           });
-        })
+        }),
       )
       .subscribe((activities) => {});
   }

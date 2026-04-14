@@ -9,6 +9,7 @@ import { Observable, of } from 'rxjs';
 export class UserData {
   userToken = signal<number | null>(null);
   dataService = inject(DataService);
+  userInfo = signal<Me | null>(null);
 
   userData = computed<Observable<Me | null>>(() => {
     if (this.userToken()) {

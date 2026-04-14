@@ -1,0 +1,16 @@
+@import '../constans/colors.scss';
+
+.top-bar__container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: $gray-color;
+  align-items: center;
+}
+
+.top-bar__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  padding: 8px 0;
+}

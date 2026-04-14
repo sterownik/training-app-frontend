@@ -1,0 +1,9 @@
+@if (!!userData.userInfo()) {
+  <div class="top-bar__container">
+    <img class="top-bar__avatar" [src]="userData.userInfo()?.avatarUrl" alt="" />
+    <p>Witaj {{ userData.userInfo()?.firstname }}</p>
+    <button (click)="exportExcel()" matMiniFab aria-label="Example icon button with a menu icon">
+      <mat-icon>download</mat-icon>
+    </button>
+  </div>
+}

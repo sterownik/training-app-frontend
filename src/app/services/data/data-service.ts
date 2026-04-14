@@ -1,5 +1,5 @@
 import { Inject, Injectable, inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import {
   ActivityExtendedFromInterface,
   ChatCompletionResponse,
@@ -12,10 +12,12 @@ import {
   ACTIVITIES_ENDPOINT,
   ACTIVITIES_RELOAD_ENDPOINT,
   AI_QUESTION_ENDPOINT,
+  GET_EXCEL,
   ME_ENDPOINT,
   UPDATE_ACTIVITY_ENDPOINT,
 } from './enpoints';
 import { Activities } from '../../activities/activities';
+import { UserData } from '../user-data';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +39,10 @@ export class DataService {
 
   aiQuestion(request: StravaAnalysisRequest): Observable<ChatCompletionResponse> {
     return this.http.post<ChatCompletionResponse>(AI_QUESTION_ENDPOINT, request);
+  }
+
+  getExcel(): Observable<Blob> {
+    return this.http.get(GET_EXCEL, { responseType: 'blob' });
   }
 
   updateActivity(request: ActivityExtendedFromInterface): Observable<void> {

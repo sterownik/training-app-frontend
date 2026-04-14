@@ -13,7 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ActivityMin } from '../interfaces/data';
 import { httpResource, HttpResourceRef } from '@angular/common/http';
-import {MatListModule, MatListOption} from '@angular/material/list';
+import { MatListModule, MatListOption } from '@angular/material/list';
 import { MIN_ACTIVITIES_ENDPOINT } from '../services/data/enpoints';
 import { JsonPipe } from '@angular/common';
 
@@ -46,7 +46,7 @@ interface AiRequestFormModelSignal {
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatListModule,
-    JsonPipe
+    JsonPipe,
   ],
   templateUrl: './ai-question.html',
   styleUrl: './ai-question.scss',
@@ -68,13 +68,11 @@ export class AiQuestion {
   response = signal<string>('');
   htmlContent = signal<string>('');
 
-  activitiesResource: HttpResourceRef<ActivityMin[] | any> = httpResource(
-    () => {
-      return this.aiRequestFormModelForm.filterType().value() === 'selected'
-        ? `${MIN_ACTIVITIES_ENDPOINT}`
-        : undefined;
-    }
-  );
+  activitiesResource: HttpResourceRef<ActivityMin[] | any> = httpResource(() => {
+    return this.aiRequestFormModelForm.filterType().value() === 'selected'
+      ? `${MIN_ACTIVITIES_ENDPOINT}`
+      : undefined;
+  });
 
   sendToModel() {
     let startDateLocalStart = '';
@@ -98,29 +96,28 @@ export class AiQuestion {
         break;
       case 'customDate':
         startDateLocalStart = moment(
-          this.aiRequestFormModelForm.startDateLocalStart().value()
+          this.aiRequestFormModelForm.startDateLocalStart().value(),
         ).format('YYYY-MM-DD');
         startDateLocalEnd = moment(this.aiRequestFormModelForm.startDateLocalEnd().value()).format(
-          'YYYY-MM-DD'
+          'YYYY-MM-DD',
         );
-        break
-
-
+        break;
     }
-    const filterActivityType = this.aiRequestFormModelForm.filterType().value() !== 'selected' ?
-  {
-        filterType: 'date',
-        startDateLocalStart: startDateLocalStart,
-        startDateLocalEnd: startDateLocalEnd,
-      } :
-      {
-        filterType: 'selected',
-        activityIds: this.selectedActivities
-      }
+    const filterActivityType =
+      this.aiRequestFormModelForm.filterType().value() !== 'selected'
+        ? {
+            filterType: 'date',
+            startDateLocalStart: startDateLocalStart,
+            startDateLocalEnd: startDateLocalEnd,
+          }
+        : {
+            filterType: 'selected',
+            activityIds: this.selectedActivities,
+          };
 
     const prepareData = {
       prompt: this.aiRequestFormModelForm.prompt().value(),
-      filterActivityType
+      filterActivityType,
     };
     this.isSaving.set(true);
 
@@ -133,6 +130,22 @@ export class AiQuestion {
   }
 
   selectionChange(selected: MatListOption[]) {
-    this.selectedActivities = selected.map(s => s.value);
+    this.selectedActivities = selected.map((s) => s.value);
+  }
+
+  exportExcel() {
+    this.dataService.getExcel().subscribe(
+      (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'aktywności.xls';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      },
+      (err) => console.error(err),
+    );
   }
 }
