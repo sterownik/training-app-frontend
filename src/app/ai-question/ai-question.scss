@@ -1,9 +1,10 @@
+@import '../constans/colors.scss';
+$message-width: 75%;
 .tra-ai-question__form,
 .tra-ai-question__response {
   width: 94%;
   margin: 16px auto;
 }
-
 
 .tra-ai-question__form-select,
 .tra-ai-question__prompt-input,
@@ -11,9 +12,31 @@
   width: 100%;
 }
 
-
 .tra-ai-question__button {
   width: 100%;
+}
+
+.tra-ai-question__message-frame {
+  width: $message-width;
+  padding: 16px 12px 12px;
+  background-color: $gray-color;
+  padding: 0px 12px;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.tra-ai-question__message-frame--assistant {
+  margin-right: auto;
+  margin-left: 16px;
+  border-radius: 8px 8px 8px 0px;
+}
+
+.tra-ai-question__message-frame--user {
+  margin-left: auto;
+  border-radius: 8px 8px 0 8px;
+  margin-right: 16px;
 }
 
 .tra-ai-question__spinner {
@@ -28,9 +51,8 @@
   z-index: 1;
 }
 
-
 .tra-ai-question__spinner-mode {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .tra-ai-question__spinner-activities {
@@ -42,4 +64,134 @@
 .tra-ai-question__activities-min {
   max-height: 400px;
   overflow-y: scroll;
+}
+
+.tra-ai-question__chat-list {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.tra-ai-question__prompt-input-wrapper {
+  margin: 16px;
+}
+
+.tra-ai-question-chat {
+  margin: 20px 0;
+}
+
+.tra-ai-question__message-loading {
+  padding-left: 16px;
+}
+
+.dot-pulse {
+  position: relative;
+  left: -9999px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: $material-primary-color;
+  color: $material-primary-color;
+  box-shadow: 9999px 0 0 -5px;
+  animation: dot-pulse 1.5s infinite linear;
+  animation-delay: 0.25s;
+}
+.dot-pulse::before,
+.dot-pulse::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: $material-primary-color;
+  color: $material-primary-color;
+}
+.dot-pulse::before {
+  box-shadow: 9984px 0 0 -5px;
+  animation: dot-pulse-before 1.5s infinite linear;
+  animation-delay: 0s;
+}
+.dot-pulse::after {
+  box-shadow: 10014px 0 0 -5px;
+  animation: dot-pulse-after 1.5s infinite linear;
+  animation-delay: 0.5s;
+}
+
+.tra-ai-question__button-new-chat {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background-color: $material-primary-color;
+  position: fixed;
+  top: 60px;
+  right: 24px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $white-color;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.tra-ai-question__button-edit-athlete-info {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background-color: $material-primary-color;
+  position: fixed;
+  top: 140px;
+  right: 24px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $white-color;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes dot-pulse-before {
+  0% {
+    box-shadow: 9984px 0 0 -5px;
+  }
+  30% {
+    box-shadow: 9984px 0 0 2px;
+  }
+  60%,
+  100% {
+    box-shadow: 9984px 0 0 -5px;
+  }
+}
+@keyframes dot-pulse {
+  0% {
+    box-shadow: 9999px 0 0 -5px;
+  }
+  30% {
+    box-shadow: 9999px 0 0 2px;
+  }
+  60%,
+  100% {
+    box-shadow: 9999px 0 0 -5px;
+  }
+}
+@keyframes dot-pulse-after {
+  0% {
+    box-shadow: 10014px 0 0 -5px;
+  }
+  30% {
+    box-shadow: 10014px 0 0 2px;
+  }
+  60%,
+  100% {
+    box-shadow: 10014px 0 0 -5px;
+  }
+}
+
+.tra-ai-question__message-frame--loading-mode {
+  padding: 16px 12px;
 }

@@ -3,6 +3,7 @@ import { Observable, of, tap } from 'rxjs';
 import {
   ActivityExtendedFromInterface,
   ChatCompletionResponse,
+  GetLastChat,
   Me,
   PageActivityDto,
   StravaAnalysisRequest,
@@ -12,12 +13,12 @@ import {
   ACTIVITIES_ENDPOINT,
   ACTIVITIES_RELOAD_ENDPOINT,
   AI_QUESTION_ENDPOINT,
+  ATHLETE_INFO,
   GET_EXCEL,
+  GET_LAST_CHAT,
   ME_ENDPOINT,
   UPDATE_ACTIVITY_ENDPOINT,
 } from './enpoints';
-import { Activities } from '../../activities/activities';
-import { UserData } from '../user-data';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +44,18 @@ export class DataService {
 
   getExcel(): Observable<Blob> {
     return this.http.get(GET_EXCEL, { responseType: 'blob' });
+  }
+
+  getLastChat(): Observable<GetLastChat[]> {
+    return this.http.get<GetLastChat[]>(GET_LAST_CHAT);
+  }
+
+  getAthleteInfo(): Observable<string> {
+    return this.http.get<string>(ATHLETE_INFO);
+  }
+
+  updateAthleteInfo(athleteInfo: string): Observable<void> {
+    return this.http.post<void>(ATHLETE_INFO, athleteInfo);
   }
 
   updateActivity(request: ActivityExtendedFromInterface): Observable<void> {

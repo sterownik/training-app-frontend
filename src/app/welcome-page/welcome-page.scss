@@ -11,7 +11,13 @@
   text-decoration: none;
   font-weight: 500;
   border-radius: 6px;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
 }
 
 .strava-btn:hover {
@@ -26,4 +32,9 @@
   width: 18px;
   height: 18px;
   filter: brightness(0) invert(1);
+}
+
+.welcome-page__photo {
+  height: 100dvh;
+  object-fit: cover;
 }

@@ -1,4 +1,13 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  QueryList,
+  signal,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,11 +20,15 @@ import moment from 'moment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { ActivityMin } from '../interfaces/data';
+import { ActivityMin, GetLastChat } from '../interfaces/data';
 import { httpResource, HttpResourceRef } from '@angular/common/http';
 import { MatListModule, MatListOption } from '@angular/material/list';
 import { MIN_ACTIVITIES_ENDPOINT } from '../services/data/enpoints';
 import { JsonPipe } from '@angular/common';
+import { delay, switchMap, tap } from 'rxjs';
+import { MatIcon } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { AthleteInfoDialog } from './athlete-info-dialog/athlete-info-dialog';
 
 interface AiRequestFormModelSignal {
   filterType:
@@ -47,14 +60,35 @@ interface AiRequestFormModelSignal {
     MatDatepickerModule,
     MatListModule,
     JsonPipe,
+    MatIcon,
   ],
   templateUrl: './ai-question.html',
   styleUrl: './ai-question.scss',
 })
-export class AiQuestion {
+export class AiQuestion implements OnInit {
+  @ViewChild('textarea') ps: ElementRef | undefined;
+  requestUserLoading!: string;
+  readonly dialog = inject(MatDialog);
+  athleteInfo = signal('');
+
+  ngOnInit(): void {
+    this.getLastChat()
+      .pipe(
+        delay(0),
+        tap(() => {
+          this.ps?.nativeElement.scrollIntoView({ behavior: 'smooth' });
+          console.log(this.ps);
+        }),
+      )
+      .subscribe();
+    this.getAthleteInfo();
+  }
   dataService = inject(DataService);
   isSaving = signal(false);
+  lastChatItems = signal<GetLastChat[]>([]);
   selectedActivities!: number[];
+  actualChatId = signal<null | string>(null);
+  thinkingProgress = signal<boolean>(false);
 
   aiRequestFormModel = signal<AiRequestFormModelSignal>({
     filterType: 'lastYear',
@@ -62,6 +96,17 @@ export class AiQuestion {
     startDateLocalStart: '',
     prompt: '',
   });
+
+  getAthleteInfo() {
+    this.dataService.getAthleteInfo().subscribe((userInfo) => {
+      this.athleteInfo.set(userInfo);
+    });
+  }
+
+  newChat() {
+    this.lastChatItems.set([]);
+    this.actualChatId.set(null);
+  }
 
   aiRequestFormModelForm = form(this.aiRequestFormModel);
 
@@ -75,58 +120,37 @@ export class AiQuestion {
   });
 
   sendToModel() {
-    let startDateLocalStart = '';
-    let startDateLocalEnd = moment().format('YYYY-MM-DD');
+    this.thinkingProgress.set(true);
+    this.requestUserLoading = this.aiRequestFormModelForm.prompt().value();
+    const message = this.aiRequestFormModelForm.prompt().value();
+    this.aiRequestFormModelForm.prompt().setControlValue('');
+    this.dataService
+      .aiQuestion({
+        idChat: this.actualChatId(),
+        message: message,
+      })
+      .pipe(
+        switchMap(() => this.getLastChat()),
+        tap(() => {
+          this.thinkingProgress.set(false);
+        }),
+      )
+      .subscribe();
+  }
 
-    const calculateDate = (months: number) => {
-      return moment().subtract(months, 'months').format('YYYY-MM-DD');
-    };
-    switch (this.aiRequestFormModelForm.filterType().value()) {
-      case 'last18months':
-        startDateLocalStart = calculateDate(18);
-        break;
-      case 'last3months':
-        startDateLocalStart = calculateDate(3);
-        break;
-      case 'last6months':
-        startDateLocalStart = calculateDate(6);
-        break;
-      case 'lastYear':
-        startDateLocalStart = calculateDate(12);
-        break;
-      case 'customDate':
-        startDateLocalStart = moment(
-          this.aiRequestFormModelForm.startDateLocalStart().value(),
-        ).format('YYYY-MM-DD');
-        startDateLocalEnd = moment(this.aiRequestFormModelForm.startDateLocalEnd().value()).format(
-          'YYYY-MM-DD',
-        );
-        break;
-    }
-    const filterActivityType =
-      this.aiRequestFormModelForm.filterType().value() !== 'selected'
-        ? {
-            filterType: 'date',
-            startDateLocalStart: startDateLocalStart,
-            startDateLocalEnd: startDateLocalEnd,
-          }
-        : {
-            filterType: 'selected',
-            activityIds: this.selectedActivities,
+  getLastChat() {
+    return this.dataService.getLastChat().pipe(
+      tap((chat) => {
+        const chatMapped = chat.map((item) => {
+          return {
+            ...item,
+            message: marked(item.message) as string,
           };
-
-    const prepareData = {
-      prompt: this.aiRequestFormModelForm.prompt().value(),
-      filterActivityType,
-    };
-    this.isSaving.set(true);
-
-    this.dataService.aiQuestion(prepareData).subscribe((data) => {
-      const markdown = data.choices[0].message.content as any;
-      this.response.set(markdown);
-      this.htmlContent.set(marked(markdown) as any);
-      this.isSaving.set(false);
-    });
+        });
+        this.actualChatId.set(chat?.[0]?.idChat || null);
+        this.lastChatItems.set(chatMapped);
+      }),
+    );
   }
 
   selectionChange(selected: MatListOption[]) {
@@ -139,7 +163,8 @@ export class AiQuestion {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'aktywności.xls';
+        const date = moment().format('DD-MM-YYYY');
+        a.download = date + '-aktywności.csv';
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -147,5 +172,18 @@ export class AiQuestion {
       },
       (err) => console.error(err),
     );
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AthleteInfoDialog, {
+      data: { athleteInfo: this.athleteInfo() },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      if (!!result) {
+        this.getAthleteInfo();
+      }
+    });
   }
 }

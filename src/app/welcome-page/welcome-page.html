@@ -1,7 +1,23 @@
-<a href="https://training-app-backend-production-4d0d.up.railway.app/auth/strava"
-   class="strava-btn">
-  <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/strava.svg"
-       alt="Strava logo"
-       class="strava-icon" />
+<a
+  href="https://training-app-backend-production-4d0d.up.railway.app/auth/strava"
+  class="strava-btn"
+>
+  <img
+    src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/strava.svg"
+    alt="Strava logo"
+    class="strava-icon"
+  />
   <span>Połącz ze Stravą</span>
 </a>
+
+<div>
+  <owl-carousel-o [options]="customOptions">
+    @for (item of carouselItems; track item.src) {
+      <ng-template carouselSlide>
+        <div class="slider">
+          <img class="welcome-page__photo" [src]="item.src" alt="" />
+        </div>
+      </ng-template>
+    }
+  </owl-carousel-o>
+</div>

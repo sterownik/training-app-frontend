@@ -52,14 +52,6 @@ export class Activities {
   ngOnInit(): void {
     this.isRealodingActivities.set(true);
     this.dataService
-      .getMe()
-      .pipe(
-        tap((data) => {
-          this.userData.userInfo.set(data);
-        }),
-      )
-      .subscribe();
-    this.dataService
       .reloadActivities()
       .pipe(
         tap(() => {
@@ -71,8 +63,12 @@ export class Activities {
             length: 249,
           });
         }),
+        switchMap(() => this.dataService.getMe()),
+        tap((data) => {
+          this.userData.userInfo.set(data);
+        }),
       )
-      .subscribe((activities) => {});
+      .subscribe();
   }
 
   changePage(pageEvent: PageEvent) {

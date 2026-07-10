@@ -58,12 +58,21 @@ export interface FilterActivityType {
   filterType: string; // np. "date"
   startDateLocalStart?: string | undefined; // data w formacie ISO
   startDateLocalEnd?: string; // data w formacie ISO
-  activityIds?: number[]
+  activityIds?: number[];
 }
 
 export interface StravaAnalysisRequest {
-  prompt: string;
-  filterActivityType: FilterActivityType;
+  idChat: string | null;
+  message: string;
+}
+
+export interface GetLastChat {
+  idMessage: number;
+  idChat: string;
+  userId: number;
+  message: string;
+  messageType: 'USER' | 'ASSISTANT' | 'SYSTEM';
+  createdA: string;
 }
 
 export interface ChatCompletionResponse {
@@ -114,8 +123,8 @@ export interface ActivityExtendedFromInterface {
 }
 
 export interface ActivityMin {
-  id: number,
-  type: string,
-  startDateLocal: string,
-  description: string
+  id: number;
+  type: string;
+  startDateLocal: string;
+  description: string;
 }

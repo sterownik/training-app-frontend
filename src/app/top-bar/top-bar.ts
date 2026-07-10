@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { DataService } from '../services/data/data-service';
+import moment from 'moment';
 
 @Component({
   selector: 'tra-top-bar',
@@ -15,9 +16,7 @@ export class TopBar implements OnInit {
   userData = inject(UserData);
   dataService = inject(DataService);
 
-  ngOnInit(): void {
-    this.userData.userInfo;
-  }
+  ngOnInit(): void {}
 
   exportExcel() {
     this.dataService.getExcel().subscribe(
@@ -25,7 +24,8 @@ export class TopBar implements OnInit {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'aktywności.xls';
+        const date = moment().format('DD-MM-YYYY');
+        a.download = date + '-aktywności.csv';
         document.body.appendChild(a);
         a.click();
         a.remove();

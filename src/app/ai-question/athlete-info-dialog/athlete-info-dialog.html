@@ -1,0 +1,16 @@
+<mat-dialog-content>
+  <p>Twój profil sportowca</p>
+  <mat-form-field class="athlete-info-dialog__form">
+    <mat-label>Opis:</mat-label>
+    <textarea #textarea matInput rows="10" type="text" [formField]="form.athleteInfo"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="onNoClick()">Zamknij</button>
+  <button matButton [disabled]="isSaving()" (click)="save()" cdkFocusInitial>
+    Zapisz
+    @if (isSaving()) {
+      <mat-icon><mat-spinner diameter="20"> </mat-spinner></mat-icon>
+    }
+  </button>
+</mat-dialog-actions>

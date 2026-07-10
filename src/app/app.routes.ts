@@ -5,12 +5,17 @@ import { Activities } from './activities/activities';
 import { loggingGuard } from './logging-guard';
 import { UserData } from './services/user-data';
 import { AiQuestion } from './ai-question/ai-question';
+import { Terms } from './terms/terms';
 
 export const routes: Routes = [
   {
     path: 'welcome',
     component: WelcomePage,
     canActivate: [loggingGuard],
+  },
+  {
+    path: 'legal',
+    component: Terms,
   },
   {
     path: 'activities',

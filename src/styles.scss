@@ -3,16 +3,24 @@
 // components according to the Material 3 design spec.
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
-@use '@angular/material'as mat;
+@use '@angular/material' as mat;
 @import './app/constans/colors.scss';
 @import './app/constans/fonts.scss';
 
 // Customize the entire app. Change :root to your selector if you want to scope the styles.
 :root {
-  @include mat.paginator-overrides((container-size: 500, container-text-weight: 700));
+  @include mat.paginator-overrides(
+    (
+      container-size: 500,
+      container-text-weight: 700,
+    )
+  );
 
-  @include mat.progress-spinner-overrides((active-indicator-color: $strava-color,
-    ));
+  @include mat.progress-spinner-overrides(
+    (
+      active-indicator-color: $strava-color,
+    )
+  );
 
   // mat-form-field {
   //   @include mat.form-field-overrides((filled-container-color: $white-color,
@@ -57,7 +65,8 @@
       display: none;
     }
 
-    .mat-mdc-form-field-infix {}
+    .mat-mdc-form-field-infix {
+    }
   }
 }
 
@@ -87,12 +96,14 @@ app-root {
 
 html {
   color-scheme: light dark;
-  @include mat.theme((color: mat.$blue-palette,
+  @include mat.theme(
+    (
+      color: mat.$blue-palette,
       typography: Roboto,
-      density: 0));
+      density: 0,
+    )
+  );
   color: #000000;
 }
-
-
 
 /* You can add global styles to this file, and also import other style files */
