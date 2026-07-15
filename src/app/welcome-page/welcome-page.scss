@@ -68,13 +68,16 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
   text-align: center;
   padding: 0 24px;
 }
 
 .welcome-page__app-desc {
   line-height: 2em;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .welcome-page__header {
@@ -93,4 +96,8 @@
 
 .welcome-page__heading {
   margin: 0 auto;
+}
+
+.welcome-page__app-desc-header {
+  padding-top: 66px;
 }
