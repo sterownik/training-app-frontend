@@ -14,6 +14,11 @@ export const routes: Routes = [
     canActivate: [loggingGuard],
   },
   {
+    path: '',
+    component: WelcomePage,
+    canActivate: [loggingGuard],
+  },
+  {
     path: 'legal',
     component: Terms,
   },

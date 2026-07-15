@@ -1,15 +1,26 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { CarouselItem } from '../interfaces/app-data';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'tra-welcome-page',
-  imports: [CarouselModule],
+  imports: [CarouselModule, RouterLink, MatIconModule],
   templateUrl: './welcome-page.html',
   styleUrl: './welcome-page.scss',
 })
 export class WelcomePage {
+  @ViewChild('features')
+  features!: ElementRef<HTMLElement>;
+
+  scrollToSection(): void {
+    this.features.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
+
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -44,15 +55,6 @@ export class WelcomePage {
     },
     {
       src: 'assets/welcome-images/2.jpg',
-    },
-    {
-      src: 'assets/welcome-images/3.jpg',
-    },
-    {
-      src: 'assets/welcome-images/4.jpg',
-    },
-    {
-      src: 'assets/welcome-images/5.jpg',
     },
   ];
 }

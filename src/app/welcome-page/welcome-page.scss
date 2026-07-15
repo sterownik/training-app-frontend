@@ -14,7 +14,6 @@
   transition:
     background-color 0.2s ease,
     transform 0.1s ease;
-  position: absolute;
   top: 20px;
   left: 20px;
   z-index: 2;
@@ -37,4 +36,61 @@
 .welcome-page__photo {
   height: 100dvh;
   object-fit: cover;
+}
+
+.welcome-page__scroll-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: $main-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 48px;
+  right: 48px;
+  z-index: 2222;
+  cursor: pointer;
+
+  .mat-icon {
+    height: 40px;
+    width: 40px;
+    font-size: 40px;
+    color: $gray-color;
+  }
+}
+
+.welcome-page__info-app {
+  height: 100vh;
+}
+
+.welcome-page__info-app {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.welcome-page__app-desc {
+  line-height: 2em;
+}
+
+.welcome-page__header {
+  width: 100%;
+  position: absolute;
+  height: fit-content;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 22222;
+  padding: 20px;
+  display: flex;
+  align-content: center;
+  flex-grow: unset;
+  align-items: baseline;
+}
+
+.welcome-page__heading {
+  margin: 0 auto;
 }
