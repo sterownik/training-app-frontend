@@ -17,6 +17,7 @@
   top: 20px;
   left: 20px;
   z-index: 2;
+  margin: 15px;
 }
 
 .strava-btn:hover {
@@ -87,7 +88,6 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.3);
   z-index: 22222;
-  padding: 20px;
   display: flex;
   align-content: center;
   flex-grow: unset;
@@ -97,6 +97,7 @@
   @media (min-width: 768px) {
     color: $gray-color;
     background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
   }
 }
 
