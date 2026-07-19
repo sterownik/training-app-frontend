@@ -85,19 +85,76 @@
   position: absolute;
   height: fit-content;
   inset: 0;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
   z-index: 22222;
   padding: 20px;
   display: flex;
   align-content: center;
   flex-grow: unset;
-  align-items: baseline;
+  align-items: center;
+  gap: 16px;
+
+  @media (min-width: 768px) {
+    color: $gray-color;
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.welcome-page__footer {
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  gap: 8px;
+  justify-content: space-around;
+  padding: 12px 0;
 }
 
 .welcome-page__heading {
   margin: 0 auto;
+  display: flex;
+  gap: 8px;
+  font-size: 1.2rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    font-size: 2rem;
+  }
 }
 
 .welcome-page__app-desc-header {
   padding-top: 66px;
+}
+
+.welcome-page__footer-item {
+  font-size: 0.8rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    font-size: unset;
+  }
+}
+
+.welcome-page__footer-anchor {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  color: $black-color;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.welcome-page__footer-anchor:hover {
+  color: $black-color;
+}
+
+.welcome-page__footer-anchor mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
 }

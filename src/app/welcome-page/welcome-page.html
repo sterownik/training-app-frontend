@@ -7,7 +7,7 @@
     />
     <span>Połącz ze Stravą</span>
   </a>
-  <h1 class="welcome-page__heading">Mobilny Trener</h1>
+  <h1 class="welcome-page__heading"><span>Mobilny</span><span>Trener</span></h1>
 </section>
 
 <div>
@@ -24,14 +24,29 @@
 <div (click)="scrollToSection()" class="welcome-page__scroll-btn">
   <mat-icon>keyboard_arrow_down</mat-icon>
 </div>
-<a routerLink="/legal">Polityka prywatności</a>
 
 <section class="welcome-page__info-app" #features>
   <h2 class="welcome-page__app-desc-header">Witaj w aplikacji Mobilny Trener</h2>
   <p class="welcome-page__app-desc">
-    Po zalogowaniu do platformy Strava, aplikacja pobierze twoje aktywności do których bedziesz mógł
-    dodać nowe parametry. Kolejno na podstawie aktywności będziesz mógł porozmawiać z czatem AI w
-    celu doszlifowania planu treningowego. Aplikacja korzysta z Angulara w wersji 21, SpringBoota
-    4.0.1 oraz bazy Postgres, aplikacja jest hostowana dzięki https://biedahosting.pl
+    <span>
+      Po zalogowaniu do platformy Strava, aplikacja pobierze twoje aktywności do których bedziesz
+      mógł dodać nowe parametry. Kolejno na podstawie aktywności będziesz mógł porozmawiać z czatem
+      AI w celu doszlifowania planu treningowego. Aplikacja korzysta z Angulara w wersji 21,
+      SpringBoota 4.0.1 oraz bazy Postgres, aplikacja jest hostowana dzięki
+      <a class="welcome-page__footer-anchor" href="https://biedahosting.pl"> bieda hosting</a></span
+    >
   </p>
 </section>
+<footer class="welcome-page__footer">
+  <div class="welcome-page__footer-item">
+    <a class="welcome-page__footer-anchor" routerLink="/legal">Polityka prywatności</a>
+  </div>
+
+  <div class="welcome-page__footer-item">©2026 Sterownik</div>
+
+  <div class="welcome-page__footer-item">
+    <a class="welcome-page__footer-anchor" href="mailto:4golda4@gmail.com"
+      ><mat-icon>mail</mat-icon><span>Kontakt</span></a
+    >
+  </div>
+</footer>
