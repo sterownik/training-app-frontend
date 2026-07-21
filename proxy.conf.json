@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://training-app-backend-production-4d0d.up.railway.app",
+    "target": "https://mobilny-trener.pl",
     "secure": true,
     "changeOrigin": true
   }
