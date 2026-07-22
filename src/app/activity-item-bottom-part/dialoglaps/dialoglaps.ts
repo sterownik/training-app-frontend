@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatDialogTitle, MatDialogContent, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
+import { NgClass } from '@angular/common';
 
 export interface ParsedLap {
   name: string;
@@ -16,11 +17,14 @@ export interface ParsedLap {
 @Component({
   selector: 'dialog-data-example-dialog',
   templateUrl: 'dialoglaps.html',
-  imports: [MatDialogTitle, MatDialogContent, MatTableModule],
+  styleUrl: 'dialoglaps.scss',
+  imports: [MatDialogTitle, MatDialogContent, MatTableModule, NgClass],
 })
 export class DialogLaps implements OnInit {
   parsedText = signal<ParsedLap[]>([]);
   isBike = signal(false);
+  HIGH_WATTS = 240;
+
   ngOnInit(): void {
     const parseLaps = this.parseLaps(this.data);
     if (parseLaps.find((item) => !!item.avgWatts)) {

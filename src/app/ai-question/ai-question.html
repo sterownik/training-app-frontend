@@ -83,58 +83,60 @@
     <div class="tra-ai-question__response" [innerHTML]="htmlContent()"></div>
   }
 </div> -->
-<div class="tra-ai-question-chat">
-  <div class="tra-ai-question__chat-list">
-    @for (item of lastChatItems(); track $index) {
-      @switch (item.messageType) {
-        @case ('USER') {
-          <div class="tra-ai-question__message-frame tra-ai-question__message-frame--user">
-            <div [innerHTML]="item.message"></div>
-          </div>
-        }
+<div class="container">
+  <div class="tra-ai-question-chat">
+    <div class="tra-ai-question__chat-list">
+      @for (item of lastChatItems(); track $index) {
+        @switch (item.messageType) {
+          @case ('USER') {
+            <div class="tra-ai-question__message-frame tra-ai-question__message-frame--user">
+              <div [innerHTML]="item.message"></div>
+            </div>
+          }
 
-        @case ('ASSISTANT') {
-          <div class="tra-ai-question__message-frame tra-ai-question__message-frame--assistant">
-            <div [innerHTML]="item.message"></div>
-          </div>
+          @case ('ASSISTANT') {
+            <div class="tra-ai-question__message-frame tra-ai-question__message-frame--assistant">
+              <div [innerHTML]="item.message"></div>
+            </div>
+          }
         }
       }
-    }
-    @if (thinkingProgress()) {
-      <div
-        class="tra-ai-question__message-frame tra-ai-question__message-frame--user tra-ai-question__message-frame--loading-mode"
-      >
-        <div [innerHTML]="requestUserLoading"></div>
-      </div>
-      <div
-        class="tra-ai-question__message-frame tra-ai-question__message-frame--assistant tra-ai-question__message-frame--loading-mode"
-      >
-        <div class="tra-ai-question__message-loading">
-          <div class="dot-pulse" innerHTML=""></div>
+      @if (thinkingProgress()) {
+        <div
+          class="tra-ai-question__message-frame tra-ai-question__message-frame--user tra-ai-question__message-frame--loading-mode"
+        >
+          <div [innerHTML]="requestUserLoading"></div>
         </div>
-      </div>
-    }
+        <div
+          class="tra-ai-question__message-frame tra-ai-question__message-frame--assistant tra-ai-question__message-frame--loading-mode"
+        >
+          <div class="tra-ai-question__message-loading">
+            <div class="dot-pulse" innerHTML=""></div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="tra-ai-question__prompt-input-wrapper">
+      <mat-form-field class="tra-ai-question__prompt-input">
+        <mat-label>Prompt do AI:</mat-label>
+        <textarea
+          #textarea
+          matInput
+          rows="10"
+          type="text"
+          [formField]="aiRequestFormModelForm.prompt"
+        ></textarea>
+      </mat-form-field>
+
+      <button (click)="sendToModel()" class="tra-ai-question__button" matButton="filled">
+        Zadaj pytanie
+      </button>
+    </div>
   </div>
 
-  <div class="tra-ai-question__prompt-input-wrapper">
-    <mat-form-field class="tra-ai-question__prompt-input">
-      <mat-label>Prompt do AI:</mat-label>
-      <textarea
-        #textarea
-        matInput
-        rows="10"
-        type="text"
-        [formField]="aiRequestFormModelForm.prompt"
-      ></textarea>
-    </mat-form-field>
-
-    <button (click)="sendToModel()" class="tra-ai-question__button" matButton="filled">
-      Zadaj pytanie
-    </button>
+  <div (click)="newChat()" class="tra-ai-question__button-new-chat">+</div>
+  <div (click)="openDialog()" class="tra-ai-question__button-edit-athlete-info">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit"></mat-icon>
   </div>
-</div>
-
-<div (click)="newChat()" class="tra-ai-question__button-new-chat">+</div>
-<div (click)="openDialog()" class="tra-ai-question__button-edit-athlete-info">
-  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit"></mat-icon>
 </div>

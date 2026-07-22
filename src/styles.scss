@@ -41,6 +41,11 @@
     align-items: center;
   }
 
+  .my-dialog .mat-mdc-dialog-surface {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
   .mat-mdc-paginator-range-label {
     text-align: center;
     margin: 0 auto;

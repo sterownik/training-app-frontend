@@ -49,6 +49,7 @@ export class ActivityItemBottomPart implements OnInit {
   openDialog() {
     this.dialog.open(DialogLaps, {
       data: this.laps,
+      panelClass: 'my-dialog',
     });
   }
 

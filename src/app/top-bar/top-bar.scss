@@ -1,15 +1,10 @@
 @import '../constans/colors.scss';
 
 .top-bar__container {
-  padding: 0 16px;
-  background-color: $gray-color;
-}
-
-.top-bar__color-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  padding: 0 16px;
+  background-color: $gray-color;
   align-items: center;
 }
 

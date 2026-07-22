@@ -1,3 +1,4 @@
+@use '../constans/common-styles.scss';
 @import '../constans/colors.scss';
 
 .strava-btn {
@@ -118,6 +119,7 @@
   @media (min-width: 768px) {
     flex-direction: row;
     font-size: 2rem;
+    margin-right: 60px;
   }
 }
 

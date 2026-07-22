@@ -7,9 +7,7 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <tra-top-bar class="tra-top-bar__shadow"></tra-top-bar>
-<div class="app-container">
-  <router-outlet />
-</div>
+<router-outlet />
 @if (!!userData.userInfo()?.stravaAthleteId) {
   <tra-navigation class="tra-navigation"></tra-navigation>
 }
