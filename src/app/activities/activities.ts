@@ -10,10 +10,16 @@ import moment from 'moment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivityItemBottomPart } from '../activity-item-bottom-part/activity-item-bottom-part';
 import { UserData } from '../services/user-data';
+import { ActivityMap } from '../activity-map/activity-map';
 
 @Component({
   selector: 'tra-activities',
-  imports: [MatPaginatorModule, MatProgressSpinnerModule, ActivityItemBottomPart],
+  imports: [
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    ActivityItemBottomPart,
+    ActivityMap,
+  ],
   templateUrl: './activities.html',
   styleUrl: './activities.scss',
 })
@@ -69,6 +75,21 @@ export class Activities {
         }),
       )
       .subscribe();
+  }
+
+  round(value: number): number {
+    return Math.round(value);
+  }
+
+  iconFor(type: string): string {
+    switch (type) {
+      case 'Run':
+        return 'assets/shoes.png';
+      case 'Ride':
+        return 'assets/road.png';
+      default:
+        return 'assets/exercises.png';
+    }
   }
 
   changePage(pageEvent: PageEvent) {

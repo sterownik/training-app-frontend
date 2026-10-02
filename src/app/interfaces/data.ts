@@ -23,6 +23,7 @@ export interface ActivityDto {
   normalizedPower: number | null;
   pace: string | null;
   laps: string;
+  summaryPolyline: string | null;
 }
 
 export interface Sort {
