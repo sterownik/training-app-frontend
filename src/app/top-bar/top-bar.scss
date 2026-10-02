@@ -1,16 +1,109 @@
 @import '../constans/colors.scss';
 
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: block;
+}
+
+// tło i cień tylko gdy pasek ma treść (zalogowany użytkownik)
+:host:has(.top-bar__container) {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
 .top-bar__container {
   display: flex;
   justify-content: space-between;
-  padding: 0 16px;
-  background-color: $gray-color;
   align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px 16px;
+}
+
+.top-bar__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
 }
 
 .top-bar__avatar {
-  width: 48px;
-  height: 48px;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
   border-radius: 50%;
-  padding: 8px 0;
+  box-shadow:
+    0 0 0 2px $white-color,
+    0 0 0 4px $strava-color;
+}
+
+.top-bar__avatar--initial {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $white-color;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background-color: $main-color;
+}
+
+.top-bar__greeting {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.top-bar__hello {
+  overflow: hidden;
+  color: $black-color;
+  font-size: 1.05rem;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.top-bar__subtitle {
+  font-size: 0.75rem;
+  opacity: 0.55;
+}
+
+.top-bar__export {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px 8px 10px;
+
+  color: $black-color;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: $gray-color;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: darken($gray-color, 5%);
+  }
+
+  .mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+  }
+}
+
+.top-bar__export-text {
+  @media (max-width: 380px) {
+    display: none;
+  }
 }

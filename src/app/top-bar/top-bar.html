@@ -1,9 +1,28 @@
 @if (!!userData.userInfo()) {
   <div class="top-bar__container">
-    <img class="top-bar__avatar" [src]="userData.userInfo()?.avatarUrl" alt="" />
-    <p>Witaj {{ userData.userInfo()?.firstname }}</p>
-    <button (click)="exportExcel()" matMiniFab aria-label="Example icon button with a menu icon">
+    <div class="top-bar__user">
+      @if (userData.userInfo()?.avatarUrl) {
+        <img class="top-bar__avatar" [src]="userData.userInfo()?.avatarUrl" alt="" />
+      } @else {
+        <span class="top-bar__avatar top-bar__avatar--initial">
+          {{ userData.userInfo()?.firstname?.charAt(0) }}
+        </span>
+      }
+      <div class="top-bar__greeting">
+        <span class="top-bar__hello">Cześć, {{ userData.userInfo()?.firstname }}</span>
+        <span class="top-bar__subtitle">Mobilny Trener</span>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="top-bar__export"
+      (click)="exportExcel()"
+      aria-label="Eksportuj aktywności do pliku"
+      title="Eksportuj aktywności"
+    >
       <mat-icon>download</mat-icon>
+      <span class="top-bar__export-text">Eksport</span>
     </button>
   </div>
 }
