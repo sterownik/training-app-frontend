@@ -1,56 +1,74 @@
-<section class="welcome-page__header">
-  <a href="./auth/strava" class="strava-btn">
-    <img
-      src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/strava.svg"
-      alt="Strava logo"
-      class="strava-icon"
-    />
-    <span>Połącz ze Stravą</span>
-  </a>
-  <h1 class="welcome-page__heading"><span>Mobilny</span><span>Trener</span></h1>
-</section>
+<header class="welcome-page__header">
+  <div class="welcome-page__brand">
+    <img class="welcome-page__brand-logo" src="assets/app-icone.png" alt="" />
+    <span>Mobilny Trener</span>
+  </div>
+  <a href="./auth/strava" class="welcome-page__header-link">Zaloguj się</a>
+</header>
 
-<div>
-  <owl-carousel-o [options]="customOptions">
-    @for (item of carouselItems; track item.src) {
-      <ng-template carouselSlide>
-        <div class="slider">
+<section class="welcome-page__hero">
+  <div class="welcome-page__hero-content">
+    <h1 class="welcome-page__heading">Trenuj mądrzej<br />z Mobilnym Trenerem</h1>
+    <p class="welcome-page__lead">
+      Twoje aktywności ze Stravy w jednym miejscu i analiza treningów z pomocą AI.
+    </p>
+    <a href="./auth/strava" class="strava-btn">
+      <img
+        src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/strava.svg"
+        alt=""
+        class="strava-icon"
+      />
+      <span>Połącz ze Stravą</span>
+    </a>
+  </div>
+
+  <div class="welcome-page__media">
+    <owl-carousel-o [options]="customOptions">
+      @for (item of carouselItems; track item.src) {
+        <ng-template carouselSlide>
           <img class="welcome-page__photo" [src]="item.src" alt="" />
-        </div>
-      </ng-template>
-    }
-  </owl-carousel-o>
-</div>
-<div (click)="scrollToSection()" class="welcome-page__scroll-btn">
-  <mat-icon>keyboard_arrow_down</mat-icon>
-</div>
+        </ng-template>
+      }
+    </owl-carousel-o>
+  </div>
+
+  <button
+    type="button"
+    (click)="scrollToSection()"
+    class="welcome-page__scroll-btn"
+    aria-label="Przewiń do opisu aplikacji"
+  >
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+</section>
 
 <section class="welcome-page__info-app" #features>
   <div class="container">
-    <h2 class="welcome-page__app-desc-header">Witaj w aplikacji Mobilny Trener</h2>
-    <p class="welcome-page__app-desc">
-      <span>
-        Po zalogowaniu do platformy Strava, aplikacja pobierze twoje aktywności do których bedziesz
-        mógł dodać nowe parametry. Kolejno na podstawie aktywności będziesz mógł porozmawiać z
-        czatem AI w celu doszlifowania planu treningowego. Aplikacja korzysta z Angulara w wersji
-        21, SpringBoota 4.0.1 oraz bazy Postgres, aplikacja jest hostowana dzięki
-        <a class="welcome-page__footer-anchor" href="https://biedahosting.pl">
-          bieda hosting</a
-        ></span
-      >
+    <h2 class="welcome-page__section-title">Jak to działa?</h2>
+
+    <div class="welcome-page__features">
+      @for (feature of featureItems; track feature.title) {
+        <article class="welcome-page__feature">
+          <div class="welcome-page__feature-icon">
+            <mat-icon>{{ feature.icon }}</mat-icon>
+          </div>
+          <h3 class="welcome-page__feature-title">{{ feature.title }}</h3>
+          <p class="welcome-page__feature-desc">{{ feature.description }}</p>
+        </article>
+      }
+    </div>
+
+    <p class="welcome-page__tech">
+      Angular 21 · Spring Boot 4 · PostgreSQL · hosting dzięki
+      <a class="welcome-page__footer-anchor" href="https://biedahosting.pl">bieda hosting</a>
     </p>
   </div>
 </section>
+
 <footer class="welcome-page__footer">
-  <div class="welcome-page__footer-item">
-    <a class="welcome-page__footer-anchor" routerLink="/legal">Polityka prywatności</a>
-  </div>
-
-  <div class="welcome-page__footer-item">©2026 Sterownik</div>
-
-  <div class="welcome-page__footer-item">
-    <a class="welcome-page__footer-anchor" href="mailto:4golda4@gmail.com"
-      ><mat-icon>mail</mat-icon><span>Kontakt</span></a
-    >
-  </div>
+  <a class="welcome-page__footer-anchor" routerLink="/legal">Polityka prywatności</a>
+  <span>©2026 Sterownik</span>
+  <a class="welcome-page__footer-anchor" href="mailto:4golda4@gmail.com">
+    <mat-icon>mail</mat-icon><span>Kontakt</span>
+  </a>
 </footer>
