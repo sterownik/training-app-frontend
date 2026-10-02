@@ -20,7 +20,7 @@
       @for (item of activitiesResource.value()?.content; track item.id) {
         <article class="tra-activities__card">
           <header class="tra-activities__card-header">
-            <div class="tra-activities__icon-badge">
+            <div class="tra-activities__icon-badge" [class]="typeModifier(item.type)">
               <img [src]="iconFor(item.type)" class="tra-activities__list-icon" alt="" />
             </div>
             <div class="tra-activities__card-title">
@@ -34,52 +34,58 @@
             </div>
           </header>
 
-          @if (item.photoUrl || item.summaryPolyline) {
-            <div
+          @if (item.summaryPolyline || item.photos.length) {
+            <tra-activity-media
               class="tra-activities__media"
-              [class.tra-activities__media--double]="item.photoUrl && item.summaryPolyline"
-            >
-              @if (item.photoUrl) {
-                <img class="tra-activities__photo" [src]="item.photoUrl" alt="" loading="lazy" />
-              }
-              @if (item.summaryPolyline) {
-                <tra-activity-map class="tra-activities__map" [polyline]="item.summaryPolyline" />
-              }
-            </div>
+              [polyline]="item.summaryPolyline"
+              [photos]="item.photos"
+            />
           }
 
           <div class="tra-activities__stats">
-            <div class="tra-activities__stat">
-              <span class="tra-activities__field-description">Czas</span>
-              <span class="tra-activities__stat-value">{{ item.moving_time }}</span>
-            </div>
-            @if (item.type === 'Run' || item.type === 'Ride') {
+            @if (hasDistance(item.type)) {
               <div class="tra-activities__stat">
-                <span class="tra-activities__field-description">Dystans</span>
+                <span class="tra-activities__stat-label">Dystans</span>
                 <span class="tra-activities__stat-value">{{ item.distance }}</span>
               </div>
+            }
+            <div class="tra-activities__stat">
+              <span class="tra-activities__stat-label">Czas</span>
+              <span class="tra-activities__stat-value">{{ item.moving_time }}</span>
+            </div>
+            @if (hasDistance(item.type)) {
               <div class="tra-activities__stat">
-                <span class="tra-activities__field-description">
+                <span class="tra-activities__stat-label">
                   {{ item.type === 'Ride' ? 'Prędkość' : 'Tempo' }}
                 </span>
                 <span class="tra-activities__stat-value">{{ item.pace ?? '-' }}</span>
               </div>
-            }
-            <div class="tra-activities__stat">
-              <span class="tra-activities__field-description">Tętno</span>
-              <span class="tra-activities__stat-value">
-                {{ item.averageHeartRate ? round(item.averageHeartRate) + ' bpm' : '-' }}
-              </span>
-            </div>
-            @if (item.type === 'Ride') {
+            } @else {
               <div class="tra-activities__stat">
-                <span class="tra-activities__field-description">Moc</span>
+                <span class="tra-activities__stat-label">Tętno</span>
                 <span class="tra-activities__stat-value">
-                  {{ item.averageWatts ? round(item.averageWatts) + ' W' : '-' }}
+                  {{ item.averageHeartRate ? round(item.averageHeartRate) + ' bpm' : '-' }}
                 </span>
               </div>
             }
           </div>
+
+          @if (hasDistance(item.type) && (item.averageHeartRate || item.averageWatts)) {
+            <div class="tra-activities__chips">
+              @if (item.averageHeartRate) {
+                <span class="tra-activities__chip tra-activities__chip--hr">
+                  <mat-icon>favorite</mat-icon>
+                  {{ round(item.averageHeartRate) }} bpm
+                </span>
+              }
+              @if (item.type === 'Ride' && item.averageWatts) {
+                <span class="tra-activities__chip tra-activities__chip--power">
+                  <mat-icon>bolt</mat-icon>
+                  {{ round(item.averageWatts) }} W
+                </span>
+              }
+            </div>
+          }
 
           <tra-activity-item-bottom-part
             [laps]="item.laps"

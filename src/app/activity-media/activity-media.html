@@ -1,0 +1,49 @@
+<div class="tra-activity-media__track" #track (scroll)="onScroll()">
+  @for (slide of slides(); track $index) {
+    <div class="tra-activity-media__slide">
+      @switch (slide.kind) {
+        @case ('map') {
+          <tra-activity-map class="tra-activity-media__map" [polyline]="slide.polyline" />
+        }
+        @case ('photo') {
+          <img class="tra-activity-media__photo" [src]="slide.url" alt="" loading="lazy" />
+        }
+      }
+    </div>
+  }
+</div>
+
+@if (slides().length > 1) {
+  @if (activeIndex() > 0) {
+    <button
+      type="button"
+      class="tra-activity-media__arrow tra-activity-media__arrow--prev"
+      aria-label="Poprzedni slajd"
+      (click)="goTo(activeIndex() - 1)"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  }
+  @if (activeIndex() < slides().length - 1) {
+    <button
+      type="button"
+      class="tra-activity-media__arrow tra-activity-media__arrow--next"
+      aria-label="Następny slajd"
+      (click)="goTo(activeIndex() + 1)"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  }
+
+  <div class="tra-activity-media__dots">
+    @for (slide of slides(); track $index) {
+      <button
+        type="button"
+        class="tra-activity-media__dot"
+        [class.tra-activity-media__dot--active]="$index === activeIndex()"
+        [attr.aria-label]="'Slajd ' + ($index + 1)"
+        (click)="goTo($index)"
+      ></button>
+    }
+  </div>
+}

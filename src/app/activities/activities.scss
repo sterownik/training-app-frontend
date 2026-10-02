@@ -40,7 +40,7 @@
 .tra-activities__card {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   padding: 16px;
   overflow: hidden;
 
@@ -104,6 +104,12 @@
   border-radius: 999px;
 }
 
+.tra-activities__icon-badge.tra-activities__type--ride,
+.tra-activities__icon-badge.tra-activities__type--run,
+.tra-activities__icon-badge.tra-activities__type--other {
+  padding: 0;
+}
+
 .tra-activities__type--ride {
   color: $strava-color;
   background-color: rgba(252, 76, 2, 0.1);
@@ -125,63 +131,77 @@
 }
 
 .tra-activities__media {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 100%;
-  gap: 4px;
-  height: 200px;
-  overflow: hidden;
   margin: 0 -16px;
-
-  @media (min-width: 768px) {
-    height: 260px;
-  }
-}
-
-.tra-activities__media--double {
-  grid-template-columns: 1fr 1fr;
-}
-
-.tra-activities__photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  object-fit: cover;
-}
-
-.tra-activities__map {
-  position: relative;
-  z-index: 0; // warstwy Leaflet nie wchodza na pasek nawigacji
-  height: 100%;
 }
 
 .tra-activities__stats {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 8px;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
 }
 
 .tra-activities__stat {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 8px 10px;
-  background-color: $gray-color;
-  border-radius: 10px;
+  min-width: 0;
+  padding: 0 12px;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  & + & {
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+  }
 }
 
-.tra-activities__stat-value {
-  font-size: 1.05rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.tra-activities__field-description {
+.tra-activities__stat-label {
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  opacity: 0.6;
+  opacity: 0.55;
+}
+
+.tra-activities__stat-value {
+  color: $black-color;
+  font-size: clamp(1rem, 4.2vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+
+.tra-activities__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tra-activities__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px 4px 8px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 999px;
+
+  .mat-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+  }
+}
+
+.tra-activities__chip--hr {
+  color: #d93a3a;
+  background-color: rgba(217, 58, 58, 0.08);
+}
+
+.tra-activities__chip--power {
+  color: #b7791f;
+  background-color: rgba(236, 168, 46, 0.14);
 }
 
 .tra-activities__spinner {

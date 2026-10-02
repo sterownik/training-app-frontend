@@ -10,7 +10,8 @@ import moment from 'moment';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivityItemBottomPart } from '../activity-item-bottom-part/activity-item-bottom-part';
 import { UserData } from '../services/user-data';
-import { ActivityMap } from '../activity-map/activity-map';
+import { ActivityMedia } from '../activity-media/activity-media';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'tra-activities',
@@ -18,7 +19,8 @@ import { ActivityMap } from '../activity-map/activity-map';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     ActivityItemBottomPart,
-    ActivityMap,
+    ActivityMedia,
+    MatIconModule,
   ],
   templateUrl: './activities.html',
   styleUrl: './activities.scss',
@@ -45,6 +47,7 @@ export class Activities {
           return {
             ...item,
             startDateLocal: moment(item.startDateLocal).format('DD.MM.YYYY, HH:mm'),
+            photos: item.photoUrl ? [item.photoUrl] : [],
           };
         });
         return {
@@ -81,6 +84,10 @@ export class Activities {
 
   round(value: number): number {
     return Math.round(value);
+  }
+
+  hasDistance(type: string): boolean {
+    return type === 'Run' || type === 'Ride';
   }
 
   typeLabel(type: string): string {
