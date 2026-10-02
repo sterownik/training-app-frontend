@@ -14,11 +14,15 @@
 .tra-activity-item-bottom-part__field-desc-row {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 
 .tra-activity-item-bottom-part__field-description {
-  font-size: .5rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.6;
 }
 
 .tra-activity-item-bottom-part__description-container {
@@ -45,13 +49,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 12px;
   position: relative;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .tra-activity-item-bottom-part__icon {}
 
 .tra-activity-item-bottom-part__unedided-form-values {
-  width: 70%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  font-size: 0.95rem;
 }
 
 .tra-activity-item-bottom-part__saving-spinner-container {

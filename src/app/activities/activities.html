@@ -1,17 +1,18 @@
-<!-- @if(activities) { -->
 <div class="container">
-  @if (activitiesResource.isLoading() || isRealodingActivities()) {
+  <div class="tra-activities__heading">
+    <h1 class="tra-activities__title">Twoje aktywności</h1>
+    @if (isRealodingActivities()) {
+      <span class="tra-activities__sync">
+        <mat-spinner diameter="14"></mat-spinner>
+        Synchronizacja ze Stravą
+      </span>
+    }
+  </div>
+
+  @if (activitiesResource.isLoading() && !activitiesResource.hasValue()) {
     <div class="tra-activities__spinner">
       <mat-spinner></mat-spinner>
-
-      <div class="tra-activities__spinner-text">
-        @if (isRealodingActivities()) {
-          <span>Synchronizacja aktywności</span>
-        }
-        @if (activitiesResource.isLoading()) {
-          <span>Pobieranie aktywności</span>
-        }
-      </div>
+      <span class="tra-activities__spinner-text">Pobieranie aktywności</span>
     </div>
   }
   @if (activitiesResource.value()) {
@@ -24,7 +25,12 @@
             </div>
             <div class="tra-activities__card-title">
               <span class="tra-activities__description-text">{{ item.description }}</span>
-              <span class="tra-activities__date">{{ item.startDateLocal }}</span>
+              <div class="tra-activities__meta">
+                <span class="tra-activities__type" [class]="typeModifier(item.type)">
+                  {{ typeLabel(item.type) }}
+                </span>
+                <span class="tra-activities__date">{{ item.startDateLocal }}</span>
+              </div>
             </div>
           </header>
 
@@ -101,4 +107,3 @@
   }
 </div>
 
-<!-- } -->

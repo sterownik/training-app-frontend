@@ -1,7 +1,7 @@
 import { Component, inject, resource, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data/data-service';
-import { switchMap, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ActivityDto, PageActivityDto } from '../interfaces/data';
 import { ACTIVITIES_ENDPOINT } from '../services/data/enpoints';
@@ -44,7 +44,7 @@ export class Activities {
         const parsed = raw.content.map((item: ActivityDto) => {
           return {
             ...item,
-            startDateLocal: moment(item.startDateLocal).format('HH:mm DD-MM-YYYY'),
+            startDateLocal: moment(item.startDateLocal).format('DD.MM.YYYY, HH:mm'),
           };
         });
         return {
@@ -56,22 +56,24 @@ export class Activities {
   );
 
   ngOnInit(): void {
+    // Lista pokazuje się od razu, synchronizacja ze Stravą idzie w tle
+    this.pageEvent.set({
+      previousPageIndex: 0,
+      pageIndex: 0,
+      pageSize: 20,
+      length: 0,
+    });
+
+    this.dataService.getMe().subscribe((data) => this.userData.userInfo.set(data));
+
     this.isRealodingActivities.set(true);
     this.dataService
       .reloadActivities()
       .pipe(
+        catchError(() => of(null)),
         tap(() => {
           this.isRealodingActivities.set(false);
-          this.pageEvent.set({
-            previousPageIndex: 0,
-            pageIndex: 0,
-            pageSize: 20,
-            length: 249,
-          });
-        }),
-        switchMap(() => this.dataService.getMe()),
-        tap((data) => {
-          this.userData.userInfo.set(data);
+          this.activitiesResource.reload();
         }),
       )
       .subscribe();
@@ -79,6 +81,30 @@ export class Activities {
 
   round(value: number): number {
     return Math.round(value);
+  }
+
+  typeLabel(type: string): string {
+    switch (type) {
+      case 'Run':
+        return 'Bieg';
+      case 'Ride':
+        return 'Rower';
+      case 'WeightTraining':
+        return 'Siłownia';
+      default:
+        return type;
+    }
+  }
+
+  typeModifier(type: string): string {
+    switch (type) {
+      case 'Run':
+        return 'tra-activities__type--run';
+      case 'Ride':
+        return 'tra-activities__type--ride';
+      default:
+        return 'tra-activities__type--other';
+    }
   }
 
   iconFor(type: string): string {

@@ -19,7 +19,7 @@
 
 
     <mat-form-field class="tra-activity-item-bottom-part__desc-input">
-      <mat-label>Opis treningu:</mat-label>
+      <mat-label>Opis treningu</mat-label>
       <textarea matInput
                 type="text"
                 [formField]="activityExtendedDataForm.descriptionTyped"></textarea>
@@ -42,12 +42,12 @@
   <div class="tra-activity-item-bottom-part__unedided-form-values">
     @if (activityExtendedData.isBike) {
     <div class="tra-activity-item-bottom-part__field-desc-row">
-      <span class="tra-activity-item-bottom-part__field-description">Moc np:</span>
+      <span class="tra-activity-item-bottom-part__field-description">Moc NP</span>
       <span>{{activityExtendedDataForm.npPower().value() ? activityExtendedDataForm.npPower().value() + ' watt' : '-'}}</span>
     </div>
     }
     <div class="tra-activity-item-bottom-part__field-desc-row">
-      <span class="tra-activity-item-bottom-part__field-description">Opis treningu:</span>
+      <span class="tra-activity-item-bottom-part__field-description">Opis treningu</span>
       <div class="tra-activity-item-bottom-part__description-container">
         <span
               class="tra-activity-item-bottom-part__description-content">{{activityExtendedDataForm.descriptionTyped().value() || '-' |textCutter:70}}</span>

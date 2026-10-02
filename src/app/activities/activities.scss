@@ -2,11 +2,39 @@
 @use '../constans/common-styles.scss';
 @import '../constans/colors.scss';
 
+.tra-activities__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin: 24px 16px 0;
+}
+
+.tra-activities__title {
+  margin: 0;
+  color: $white-color;
+  font-size: 1.6rem;
+  letter-spacing: -0.5px;
+}
+
+.tra-activities__sync {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+
+  color: $black-color;
+  font-size: 0.8rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+}
+
 .tra-activities__list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin: 24px 16px;
+  gap: 16px;
+  margin: 16px 16px 24px;
 }
 
 .tra-activities__card {
@@ -17,8 +45,13 @@
   overflow: hidden;
 
   background-color: $white-color;
-  border-radius: 16px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.14);
+  }
 }
 
 .tra-activities__card-header {
@@ -55,6 +88,35 @@
   font-size: 1.05rem;
   font-weight: 700;
   overflow-wrap: anywhere;
+}
+
+.tra-activities__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.tra-activities__type {
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.tra-activities__type--ride {
+  color: $strava-color;
+  background-color: rgba(252, 76, 2, 0.1);
+}
+
+.tra-activities__type--run {
+  color: #1f8f8a;
+  background-color: rgba(78, 199, 194, 0.18);
+}
+
+.tra-activities__type--other {
+  color: $black-color;
+  background-color: $gray-color;
 }
 
 .tra-activities__date {
@@ -110,6 +172,7 @@
 }
 
 .tra-activities__stat-value {
+  font-size: 1.05rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -125,7 +188,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100dvh;
+  min-height: 60dvh;
   width: 100%;
   flex-direction: column;
   gap: 16px;
