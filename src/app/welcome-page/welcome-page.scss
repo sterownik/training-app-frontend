@@ -5,20 +5,21 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 20px;
-  background-color: $strava-color;
-  /* oficjalny Strava Orange */
-  color: $white-color;
-  text-decoration: none;
-  font-weight: 500;
-  border-radius: 6px;
-  transition:
-    background-color 0.2s ease,
-    transform 0.1s ease;
-  top: 20px;
-  left: 20px;
-  z-index: 2;
-  margin: 15px;
+
+  padding: 12px 22px;
+
+  border-radius: 999px;
+
+  font-weight: 600;
+
+  box-shadow: 0 8px 20px rgba(252, 76, 2, 0.35);
+
+  transition: 0.25s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(252, 76, 2, 0.45);
+  }
 }
 
 .strava-btn:hover {
@@ -35,7 +36,24 @@
   filter: brightness(0) invert(1);
 }
 
+.slider {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.7)
+    );
+  }
+}
+
 .welcome-page__photo {
+  width: 100%;
   height: 100dvh;
   object-fit: cover;
 }
@@ -83,23 +101,29 @@
 }
 
 .welcome-page__header {
-  width: 100%;
-  position: absolute;
-  height: fit-content;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 22222;
-  display: flex;
-  align-content: center;
-  flex-grow: unset;
-  align-items: center;
-  gap: 16px;
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
 
-  @media (min-width: 768px) {
-    color: $gray-color;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-  }
+  width: calc(100% - 32px);
+  max-width: 1200px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 20px;
+
+  border-radius: 18px;
+
+  backdrop-filter: blur(12px);
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  z-index: 1000;
 }
 
 .welcome-page__footer {
@@ -111,16 +135,10 @@
 }
 
 .welcome-page__heading {
-  margin: 0 auto;
-  display: flex;
-  gap: 8px;
-  font-size: 1.2rem;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    font-size: 2rem;
-    margin-right: 60px;
-  }
+  color: white;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: -1px;
 }
 
 .welcome-page__app-desc-header {
