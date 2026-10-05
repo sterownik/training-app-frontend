@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { DialogLaps } from './dialoglaps/dialoglaps';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 interface ActivityExtendedFromModelSignal {
   id: number;
@@ -34,6 +35,7 @@ interface ActivityExtendedFromModelSignal {
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
+    TextFieldModule,
   ],
   templateUrl: './activity-item-bottom-part.html',
   styleUrl: './activity-item-bottom-part.scss',

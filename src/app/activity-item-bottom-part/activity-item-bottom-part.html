@@ -21,7 +21,10 @@
     <mat-form-field class="tra-activity-item-bottom-part__desc-input">
       <mat-label>Opis treningu</mat-label>
       <textarea matInput
-                type="text"
+                class="tra-activity-item-bottom-part__desc-textarea"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="5"
+                cdkAutosizeMaxRows="15"
                 [formField]="activityExtendedDataForm.descriptionTyped"></textarea>
     </mat-form-field>
   </div>
